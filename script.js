@@ -25,7 +25,7 @@ const projects = [
     theme: "beerbq",
     label: "Nova Siri",
     description: "Menu ufficiale BeerBQ con carne, panini, ribs e specialita del locale.",
-    hero: "assets/beerbq-hero-lite.jpg",
+    hero: "assets/beerbq-hero.jpg",
     siteUrl: "https://ros002x.github.io/beerbq-menu-demo/",
     repoUrl: "https://github.com/ros002x/beerbq-menu-demo"
   },
