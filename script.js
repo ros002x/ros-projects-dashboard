@@ -5,7 +5,7 @@ const projects = [
     theme: "alviale",
     label: "Nova Siri",
     description: "Menu digitale per consultare rapidamente le proposte del locale.",
-    hero: "assets/alviale-hero.png",
+    hero: "assets/alviale-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/alviale-menu/",
     repoUrl: "https://github.com/ros002x/alviale-menu"
   },
@@ -25,7 +25,7 @@ const projects = [
     theme: "beerbq",
     label: "Nova Siri",
     description: "Menu ufficiale BeerBQ con carne, panini, ribs e specialita del locale.",
-    hero: "assets/beerbq-hero.png",
+    hero: "assets/beerbq-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/beerbq-menu-demo/",
     repoUrl: "https://github.com/ros002x/beerbq-menu-demo"
   },
@@ -35,7 +35,7 @@ const projects = [
     theme: "grancaffe",
     label: "Nova Siri",
     description: "Menu digitale demo per Gran Caffe Essential a Nova Siri Marina.",
-    hero: "assets/grancaffe-hero.png",
+    hero: "assets/grancaffe-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/gran-caffe-essential-demo/",
     repoUrl: "https://github.com/ros002x/gran-caffe-essential-demo"
   },
@@ -55,7 +55,7 @@ const projects = [
     theme: "tattoo",
     label: "Nova Siri",
     description: "Sito vetrina per studio tattoo, informazioni, stile e contatti.",
-    hero: "assets/tattoo-hero.png",
+    hero: "assets/tattoo-hero-lite.jpg",
     logo: "assets/respect-logo.png",
     siteUrl: "https://ros002x.github.io/respect-tattoo-art/",
     repoUrl: "https://github.com/ros002x/respect-tattoo-art"
@@ -66,7 +66,7 @@ const projects = [
     theme: "tunnel",
     label: "Policoro",
     description: "Menu Smokehouse con focus su BBQ, burger e proposte del locale.",
-    hero: "assets/tunnel-hero.png",
+    hero: "assets/tunnel-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/tunnel-2-0-smokehouse/",
     repoUrl: "https://github.com/ros002x/tunnel-2-0-smokehouse"
   },
@@ -76,7 +76,7 @@ const projects = [
     theme: "vidaloca",
     label: "Nova Siri",
     description: "Esperienza web mobile per locale, menu e contenuti promozionali.",
-    hero: "assets/vidaloca-hero.png",
+    hero: "assets/vidaloca-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/vidaloca-demo/",
     repoUrl: "https://github.com/ros002x/vidaloca-demo"
   },
@@ -86,7 +86,7 @@ const projects = [
     theme: "cinema",
     label: "Policoro",
     description: "Programmazione cinema, film e biglietti in una pagina pensata per mobile.",
-    hero: "assets/cinema-hero-generated-v2.png",
+    hero: "assets/cinema-hero-lite.jpg",
     siteUrl: "https://ros002x.github.io/cinema-hollywood/",
     repoUrl: "https://github.com/ros002x/cinema-hollywood"
   }
@@ -97,6 +97,7 @@ const filtersEl = document.querySelector("#cityFilters");
 const searchEl = document.querySelector("#projectSearch");
 let activeCity = "all";
 let searchTerm = "";
+let heroObserver = null;
 
 const cities = [
   { id: "all", label: "Tutti" },
@@ -125,6 +126,10 @@ const renderFilters = () => {
 };
 
 const renderProjects = () => {
+  if (heroObserver) {
+    heroObserver.disconnect();
+  }
+
   const cityProjects = activeCity === "all"
     ? projects
     : projects.filter((project) => project.city === activeCity);
@@ -143,7 +148,7 @@ const renderProjects = () => {
       const id = slugify(project.title);
 
       return `
-        <section class="project project--${project.theme}" id="${id}" style="--hero-image: url('${project.hero.replace(/'/g, "%27")}')">
+        <section class="project project--${project.theme}" id="${id}" data-hero="${project.hero}">
           ${project.logo ? `<img class="project__logo-mark" src="${project.logo}" alt="" aria-hidden="true">` : ""}
           <div class="project__content">
             <p class="eyebrow">${project.label}</p>
@@ -168,6 +173,51 @@ const renderProjects = () => {
         </div>
       </section>
     `;
+
+  setupHeroLoading();
+};
+
+const loadProjectHero = (projectEl) => {
+  const hero = projectEl.dataset.hero;
+
+  if (!hero || projectEl.classList.contains("is-hero-loaded")) {
+    return;
+  }
+
+  projectEl.style.setProperty("--hero-image", `url("${hero}")`);
+  projectEl.classList.add("is-hero-loaded");
+};
+
+const setupHeroLoading = () => {
+  const projectEls = [...projectsEl.querySelectorAll(".project[data-hero]")];
+
+  if (!("IntersectionObserver" in window)) {
+    projectEls.forEach(loadProjectHero);
+    return;
+  }
+
+  heroObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        loadProjectHero(entry.target);
+        heroObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "700px 0px" }
+  );
+
+  projectEls.forEach((projectEl, index) => {
+    if (index === 0) {
+      loadProjectHero(projectEl);
+      return;
+    }
+
+    heroObserver.observe(projectEl);
+  });
 };
 
 filtersEl.addEventListener("click", (event) => {

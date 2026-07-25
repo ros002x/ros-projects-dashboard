@@ -12,6 +12,7 @@
   --tile-ink: #171310;
   --tile-muted: rgba(23, 19, 16, 0.62);
   --tile-accent: #111111;
+  --hero-image: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.16));
   --title-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
   --body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
 }
@@ -318,6 +319,12 @@ h2 {
   font-family: var(--body-font);
   animation: tileReveal 620ms ease both;
   transition: filter 220ms ease;
+}
+
+.project:not(.is-hero-loaded) {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--tile-accent) 32%, #111111), #16120f),
+    var(--tile-bg);
 }
 
 .project:hover {
@@ -650,6 +657,10 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .topbar {
     align-items: start;
     flex-direction: column;
@@ -691,6 +702,19 @@ h2 {
       linear-gradient(112deg, color-mix(in srgb, var(--tile-accent) 28%, transparent), transparent 48%),
       var(--hero-image) center top / cover no-repeat,
       var(--tile-bg);
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+
+  .project:hover {
+    filter: none;
+  }
+
+  .project:not(.is-hero-loaded) {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.82)),
+      linear-gradient(135deg, color-mix(in srgb, var(--tile-accent) 34%, #111111), #151210);
   }
 
   .project:nth-child(even) {
@@ -701,6 +725,23 @@ h2 {
       linear-gradient(112deg, color-mix(in srgb, var(--tile-accent) 28%, transparent), transparent 48%),
       var(--hero-image) center top / cover no-repeat,
       var(--tile-bg);
+  }
+
+  .project::before,
+  .project::after {
+    box-shadow: none;
+  }
+
+  .project__title,
+  .button,
+  .button--primary::after {
+    transition: none;
+  }
+
+  .project__title:hover,
+  .button:hover {
+    transform: none;
+    filter: none;
   }
 
   .project:nth-child(even) .eyebrow {
