@@ -665,11 +665,11 @@ h2 {
 }
 
 .project--beerbq .project__shade {
-  background: none;
+  background: linear-gradient(90deg, rgba(18, 7, 3, 0.68) 0%, rgba(18, 7, 3, 0.42) 32%, transparent 58%);
 }
 
 .project--beerbq:nth-child(even) .project__shade {
-  background: none;
+  background: linear-gradient(270deg, rgba(18, 7, 3, 0.68) 0%, rgba(18, 7, 3, 0.42) 32%, transparent 58%);
 }
 
 .project--moulin .project__bg {
@@ -679,17 +679,43 @@ h2 {
 
 .project--moulin .project__shade,
 .project--moulin:nth-child(even) .project__shade {
-  background: none;
+  background: linear-gradient(90deg, rgba(24, 20, 18, 0.7) 0%, rgba(24, 20, 18, 0.45) 32%, transparent 58%);
+}
+
+.project--moulin:nth-child(even) .project__shade {
+  background: linear-gradient(270deg, rgba(24, 20, 18, 0.7) 0%, rgba(24, 20, 18, 0.45) 32%, transparent 58%);
 }
 
 .project--beerbq h2,
 .project--beerbq .project__description,
 .project--beerbq .eyebrow {
-  color: #24150d;
+  color: #ffffff;
 }
 
 .project--beerbq .eyebrow::before {
-  background: #24150d;
+  background: #ffffff;
+}
+
+.project--beerbq h2,
+.project--moulin h2 {
+  text-shadow: 0 12px 34px rgba(0, 0, 0, 0.62);
+}
+
+.project--beerbq .project__description,
+.project--moulin .project__description,
+.project--beerbq .eyebrow,
+.project--moulin .eyebrow {
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.68);
+}
+
+.project--moulin h2,
+.project--moulin .project__description,
+.project--moulin .eyebrow {
+  color: #ffffff;
+}
+
+.project--moulin .eyebrow::before {
+  background: #ffffff;
 }
 
 .project--tattoo .project__shade {
@@ -935,7 +961,7 @@ h2 {
 
   .project--beerbq .project__shade,
   .project--beerbq:nth-child(even) .project__shade {
-    background: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(18, 7, 3, 0.16) 42%, rgba(18, 7, 3, 0.82) 100%);
   }
 
   .project--moulin,
@@ -953,7 +979,7 @@ h2 {
 
   .project--moulin .project__shade,
   .project--moulin:nth-child(even) .project__shade {
-    background: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(24, 20, 18, 0.18) 42%, rgba(24, 20, 18, 0.84) 100%);
   }
 
   .project--beerbq .project__content,
