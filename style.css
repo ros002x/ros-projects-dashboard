@@ -321,6 +321,26 @@ h2 {
   transition: filter 220ms ease;
 }
 
+.project__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.project__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.16)),
+    linear-gradient(112deg, color-mix(in srgb, var(--tile-accent) 42%, transparent), transparent 46%);
+}
+
 .project:not(.is-hero-loaded) {
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--tile-accent) 32%, #111111), #16120f),
@@ -339,6 +359,12 @@ h2 {
     linear-gradient(248deg, color-mix(in srgb, var(--tile-accent) 42%, transparent), transparent 46%),
     var(--hero-image) center / cover no-repeat,
     var(--tile-bg);
+}
+
+.project:nth-child(even) .project__shade {
+  background:
+    linear-gradient(270deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.16)),
+    linear-gradient(248deg, color-mix(in srgb, var(--tile-accent) 42%, transparent), transparent 46%);
 }
 
 .project:nth-child(even) .eyebrow {
@@ -614,6 +640,58 @@ h2 {
     var(--tile-bg);
 }
 
+.project,
+.project:nth-child(even),
+.project--beerbq,
+.project--beerbq:nth-child(even),
+.project--moulin,
+.project--moulin:nth-child(even),
+.project--tattoo,
+.project--tattoo:nth-child(even),
+.project--cinema,
+.project--cinema:nth-child(even) {
+  background: var(--tile-bg);
+}
+
+.project--beerbq .project__bg,
+.project--moulin .project__bg {
+  object-fit: contain;
+}
+
+.project--beerbq .project__bg {
+  object-position: 74% center;
+  padding: 22px;
+}
+
+.project--moulin .project__bg {
+  object-position: 76% center;
+  padding: 36px;
+}
+
+.project--tattoo .project__shade {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.54), rgba(0, 0, 0, 0.24)),
+    linear-gradient(112deg, rgba(216, 154, 8, 0.24), transparent 46%);
+}
+
+.project--tattoo:nth-child(even) .project__shade {
+  background:
+    linear-gradient(270deg, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.54), rgba(0, 0, 0, 0.24)),
+    linear-gradient(248deg, rgba(216, 154, 8, 0.24), transparent 46%);
+}
+
+.project--cinema .project__shade {
+  background:
+    linear-gradient(90deg, rgba(4, 10, 22, 0.88), rgba(6, 16, 38, 0.62), rgba(6, 16, 38, 0.22)),
+    linear-gradient(112deg, rgba(227, 35, 46, 0.34), transparent 46%);
+}
+
+.project--cinema:nth-child(even) .project__shade {
+  background:
+    linear-gradient(270deg, rgba(4, 10, 22, 0.88), rgba(6, 16, 38, 0.62), rgba(6, 16, 38, 0.22)),
+    linear-gradient(248deg, rgba(227, 35, 46, 0.34), transparent 46%);
+}
+
 .project--empty {
   --tile-bg: #171310;
   --tile-ink: #ffffff;
@@ -661,11 +739,18 @@ h2 {
     scroll-behavior: auto;
   }
 
+  body::before {
+    display: none;
+  }
+
   .topbar {
+    position: sticky;
     align-items: start;
     flex-direction: column;
     gap: 9px;
     padding: 10px 14px 12px;
+    backdrop-filter: none;
+    animation: none;
   }
 
   .city-filters {
@@ -705,6 +790,18 @@ h2 {
     animation: none;
     transition: none;
     transform: none;
+  }
+
+  .project__bg {
+    object-position: center top;
+    transform: translateZ(0);
+  }
+
+  .project__shade,
+  .project:nth-child(even) .project__shade {
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.12) 38%, rgba(0, 0, 0, 0.84) 100%),
+      linear-gradient(112deg, color-mix(in srgb, var(--tile-accent) 22%, transparent), transparent 52%);
   }
 
   .project:hover {
@@ -801,19 +898,40 @@ h2 {
 
   .project--beerbq,
   .project--beerbq:nth-child(even) {
+    background: #120b07;
+  }
+
+  .project--beerbq .project__bg {
+    width: 100%;
+    height: 58%;
+    object-fit: contain;
+    object-position: center;
+    padding: 18px 24px 0;
+  }
+
+  .project--beerbq .project__shade,
+  .project--beerbq:nth-child(even) .project__shade {
     background:
-      linear-gradient(180deg, rgba(18, 11, 7, 0.08) 0%, rgba(18, 11, 7, 0.16) 34%, rgba(18, 11, 7, 0.9) 100%),
-      radial-gradient(circle at 50% 30%, rgba(255, 194, 38, 0.28), transparent 40%),
-      var(--hero-image) center 18% / min(86vw, 360px) auto no-repeat,
-      #120b07;
+      linear-gradient(180deg, rgba(18, 11, 7, 0.08) 0%, rgba(18, 11, 7, 0.18) 38%, rgba(18, 11, 7, 0.92) 100%),
+      radial-gradient(circle at 50% 28%, rgba(255, 194, 38, 0.28), transparent 38%);
   }
 
   .project--moulin,
   .project--moulin:nth-child(even) {
-    background:
-      linear-gradient(180deg, rgba(236, 228, 213, 0.18) 0%, rgba(236, 228, 213, 0.36) 36%, rgba(236, 228, 213, 0.94) 100%),
-      var(--hero-image) center 24% / min(76vw, 320px) auto no-repeat,
-      #ece4d5;
+    background: #ece4d5;
+  }
+
+  .project--moulin .project__bg {
+    width: 100%;
+    height: 58%;
+    object-fit: contain;
+    object-position: center;
+    padding: 26px 34px 0;
+  }
+
+  .project--moulin .project__shade,
+  .project--moulin:nth-child(even) .project__shade {
+    background: linear-gradient(180deg, rgba(236, 228, 213, 0.1) 0%, rgba(236, 228, 213, 0.42) 40%, rgba(236, 228, 213, 0.96) 100%);
   }
 
   .project--moulin .project__content {
@@ -822,11 +940,14 @@ h2 {
 
   .project--tattoo,
   .project--tattoo:nth-child(even) {
+    background: #10120c;
+  }
+
+  .project--tattoo .project__shade,
+  .project--tattoo:nth-child(even) .project__shade {
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.16) 36%, rgba(0, 0, 0, 0.86) 100%),
-      linear-gradient(112deg, rgba(216, 154, 8, 0.12), transparent 46%),
-      var(--hero-image) center top / cover no-repeat,
-      #10120c;
+      linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.16) 38%, rgba(0, 0, 0, 0.86) 100%),
+      linear-gradient(112deg, rgba(216, 154, 8, 0.12), transparent 48%);
   }
 
   .project__logo-mark {
@@ -841,11 +962,18 @@ h2 {
 
   .project--cinema,
   .project--cinema:nth-child(even) {
+    background: #101828;
+  }
+
+  .project--cinema .project__bg {
+    object-position: 62% top;
+  }
+
+  .project--cinema .project__shade,
+  .project--cinema:nth-child(even) .project__shade {
     background:
-      linear-gradient(180deg, rgba(4, 10, 22, 0.02) 0%, rgba(4, 10, 22, 0.14) 38%, rgba(4, 10, 22, 0.88) 100%),
-      linear-gradient(112deg, rgba(227, 35, 46, 0.22), transparent 46%),
-      var(--hero-image) 62% top / cover no-repeat,
-      #101828;
+      linear-gradient(180deg, rgba(4, 10, 22, 0.02) 0%, rgba(4, 10, 22, 0.16) 38%, rgba(4, 10, 22, 0.88) 100%),
+      linear-gradient(112deg, rgba(227, 35, 46, 0.16), transparent 48%);
   }
 }
 

@@ -97,7 +97,6 @@ const filtersEl = document.querySelector("#cityFilters");
 const searchEl = document.querySelector("#projectSearch");
 let activeCity = "all";
 let searchTerm = "";
-let heroObserver = null;
 
 const cities = [
   { id: "all", label: "Tutti" },
@@ -126,10 +125,6 @@ const renderFilters = () => {
 };
 
 const renderProjects = () => {
-  if (heroObserver) {
-    heroObserver.disconnect();
-  }
-
   const cityProjects = activeCity === "all"
     ? projects
     : projects.filter((project) => project.city === activeCity);
@@ -144,11 +139,22 @@ const renderProjects = () => {
     : cityProjects;
 
   projectsEl.innerHTML = visibleProjects
-    .map((project) => {
+    .map((project, index) => {
       const id = slugify(project.title);
+      const isFirst = index === 0;
 
       return `
-        <section class="project project--${project.theme}" id="${id}" data-hero="${project.hero}">
+        <section class="project project--${project.theme}" id="${id}">
+          <img
+            class="project__bg"
+            src="${project.hero}"
+            alt=""
+            loading="${isFirst ? "eager" : "lazy"}"
+            decoding="async"
+            fetchpriority="${isFirst ? "high" : "low"}"
+            aria-hidden="true"
+          >
+          <span class="project__shade" aria-hidden="true"></span>
           ${project.logo ? `<img class="project__logo-mark" src="${project.logo}" alt="" aria-hidden="true">` : ""}
           <div class="project__content">
             <p class="eyebrow">${project.label}</p>
@@ -173,51 +179,6 @@ const renderProjects = () => {
         </div>
       </section>
     `;
-
-  setupHeroLoading();
-};
-
-const loadProjectHero = (projectEl) => {
-  const hero = projectEl.dataset.hero;
-
-  if (!hero || projectEl.classList.contains("is-hero-loaded")) {
-    return;
-  }
-
-  projectEl.style.setProperty("--hero-image", `url("${hero}")`);
-  projectEl.classList.add("is-hero-loaded");
-};
-
-const setupHeroLoading = () => {
-  const projectEls = [...projectsEl.querySelectorAll(".project[data-hero]")];
-
-  if (!("IntersectionObserver" in window)) {
-    projectEls.forEach(loadProjectHero);
-    return;
-  }
-
-  heroObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        loadProjectHero(entry.target);
-        heroObserver.unobserve(entry.target);
-      });
-    },
-    { rootMargin: "700px 0px" }
-  );
-
-  projectEls.forEach((projectEl, index) => {
-    if (index === 0) {
-      loadProjectHero(projectEl);
-      return;
-    }
-
-    heroObserver.observe(projectEl);
-  });
 };
 
 filtersEl.addEventListener("click", (event) => {
