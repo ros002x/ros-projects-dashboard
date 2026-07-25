@@ -1,4 +1,4 @@
-const CACHE_NAME = "ros-projects-hub-v3";
+const CACHE_NAME = "ros-projects-hub-v4";
 const CORE_ASSETS = [
   "./",
   "index.html",
