@@ -3,7 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f1e6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="RoS Hub">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="description" content="Dashboard mobile per aprire rapidamente siti, demo e repository dei progetti locali.">
     <title>RoS GitHub Projects</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    <link rel="icon" href="assets/icon-192.png">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -32,5 +40,12 @@
     </main>
 
     <script src="script.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js").catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

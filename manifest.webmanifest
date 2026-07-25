@@ -1,0 +1,23 @@
+{
+  "name": "RoS Projects Hub",
+  "short_name": "RoS Hub",
+  "description": "Dashboard mobile per aprire rapidamente siti, demo e repository dei progetti locali.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f1e6",
+  "theme_color": "#f8f1e6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
