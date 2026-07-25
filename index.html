@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RoS GitHub Projects</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="topbar" aria-label="Navigazione principale">
+      <a class="brand" href="#home" aria-label="Vai all'inizio">
+        <span>RoS</span>
+        <small>GitHub Hub</small>
+      </a>
+      <nav id="cityFilters" class="city-filters" aria-label="Filtro citta"></nav>
+      <label class="search-box" for="projectSearch">
+        <span aria-hidden="true">⌕</span>
+        <input id="projectSearch" type="search" placeholder="Cerca locale" autocomplete="off">
+      </label>
+    </header>
+
+    <main id="home">
+      <section class="intro" aria-labelledby="introTitle">
+        <div class="intro__content">
+          <p class="eyebrow">Hub operativo</p>
+          <h1 id="introTitle">Dashboard locali</h1>
+          <p>Gestisci e apri rapidamente siti, demo e repository dei progetti divisi per citta.</p>
+        </div>
+      </section>
+
+      <div id="projects" class="projects" aria-live="polite"></div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
