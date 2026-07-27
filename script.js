@@ -92,6 +92,12 @@ const projects = [
   }
 ];
 
+const PROJECT_LINK_VERSION = "20260727-1";
+const withProjectVersion = (url) => {
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${PROJECT_LINK_VERSION}`;
+};
+
 const projectsEl = document.querySelector("#projects");
 const filtersEl = document.querySelector("#cityFilters");
 const searchEl = document.querySelector("#projectSearch");
@@ -142,6 +148,7 @@ const renderProjects = () => {
     .map((project, index) => {
       const id = slugify(project.title);
       const isFirst = index === 0;
+      const siteUrl = withProjectVersion(project.siteUrl);
 
       return `
         <section class="project project--${project.theme}" id="${id}">
@@ -158,12 +165,12 @@ const renderProjects = () => {
           ${project.logo ? `<img class="project__logo-mark" src="${project.logo}" alt="" aria-hidden="true">` : ""}
           <div class="project__content">
             <p class="eyebrow">${project.label}</p>
-            <a class="project__title" href="${project.siteUrl}" target="_blank" rel="noopener">
+            <a class="project__title" href="${siteUrl}" target="_blank" rel="noopener">
               <h2>${project.title}</h2>
             </a>
             <p class="project__description">${project.description}</p>
             <div class="project__actions">
-              <a class="button button--primary" href="${project.siteUrl}" target="_blank" rel="noopener">Apri sito</a>
+              <a class="button button--primary" href="${siteUrl}" target="_blank" rel="noopener">Apri sito</a>
               <a class="button" href="${project.repoUrl}" target="_blank" rel="noopener">Apri repo</a>
             </div>
           </div>
